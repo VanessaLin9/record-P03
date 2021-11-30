@@ -8,8 +8,11 @@ const db = require('./models')
 
 app.engine('hbs', exphbs({ defaultLayout:'main', extname:'.hbs'}))
 
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
+
 app.get('/', (req, res) => {
-  res.send('Hello word')
+  res.render('index')
 })
 
 app.listen(PORT, () => {
