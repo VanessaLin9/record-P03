@@ -87,3 +87,8 @@ typings/
 .dynamodb/
 
 temp/
+
+# download data
+EditStockTable.xlsx
+StockTable.xls
+EditStockTable.csv
