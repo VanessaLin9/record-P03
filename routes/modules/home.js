@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
     nest: true,
     attributes: ['id', 'name']
   })
-  .then((stock) => res.json({stock:stock}))
+  .then((stock) => res.render('index'))
   
 })
 
