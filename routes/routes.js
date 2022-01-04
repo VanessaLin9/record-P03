@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { Op } = require('sequelize')
 const Twstock = db.Twstock
@@ -38,7 +39,7 @@ router.post('/users/register',(req, res) => {
       })
   }
 
-  User.findOne({ email })
+  User.findOne({where: { email:email}})
   .then( users => {
     if (users) {
       req.flash('error_message', '註冊失敗，email已註冊過')
@@ -49,8 +50,9 @@ router.post('/users/register',(req, res) => {
     User.create({
       name,
       email,
-      password
-    }).then(users => {
+      password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+    })
+    .then(() => {
       req.flash('success_message', '帳號已成功註冊!')
       return res.redirect('/users/login')
     })
