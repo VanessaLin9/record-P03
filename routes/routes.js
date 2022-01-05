@@ -25,17 +25,17 @@ router.get('/users/register', (req, res) => {
   res.render('register')
 })
 router.post('/users/register',(req, res) => {
-  const { name, email, password, checkPassword} = req.body
+  const { name, email, password, confirmPassword} = req.body
   if ( !name || name.length > 50 || !email ) {
     req.flash('error_message', '表單內容不符條件')
     return res.render('register', {
-       name, email, password 
+       name, email
       })
   }
-  if ( checkPassword !== password) {
+  if ( confirmPassword !== password) {
     req.flash('error_message', '兩次密碼輸入不符')
     return res.render('register', {
-       name, email, password 
+       name, email 
       })
   }
 
