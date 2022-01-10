@@ -5,10 +5,11 @@ const db = require('../models')
 const User = db.User
 
 module.exports = app => {
+  //初始化 passport 模組
   app.use(passport.initialize())
   app.use(passport.session())
-}
 
+ //本地登入策略
 passport.use(new LocalStrategy({ 
   usernameField: 'email',
   passwordField: 'password',
@@ -24,6 +25,7 @@ passport.use(new LocalStrategy({
   .catch(err => document(err, false))
 }))
 
+ //序列化，反序列化
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
@@ -37,3 +39,5 @@ passport.deserializeUser(async (id, cb) => {
     res.render('new', {Error})
  }
 })
+
+}

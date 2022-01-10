@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
 const db = require('../models')
 const { Op } = require('sequelize')
 const Twstock = db.Twstock
@@ -13,13 +14,21 @@ router.get('/', (req, res) => {
     nest: true,
     attributes: ['id', 'name']
   })
-  .then((stock) => res.render('login'))
+  .then((stock) => res.render('home'))
   
 })
+
+
 // 登入
 router.get('/users/login', (req, res) => {
   res.render('login')
 })
+
+router.post('/users/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect:'/users/login'
+}))
+
 // 註冊
 router.get('/users/register', (req, res) => {
   res.render('register')
