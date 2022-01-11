@@ -20,5 +20,5 @@ router.get('/users/register', userController.signUpPage)
 router.post('/users/register', userController.signUp)
 
 //登出
-router.get('/user/logout', userController.logout)
+router.get('/users/logout', userController.logout)
 module.exports = router

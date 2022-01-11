@@ -21,7 +21,7 @@ loginPage: (req, res) => {
   },
 
 login: (req, res) => {
-  req.flash('success_message', '成功登入')
+  req.flash('success_messages', '成功登入')
   res.redirect('/')
  },
 
@@ -32,18 +32,18 @@ signUpPage:  (req, res) => {
 signUp: (req, res) => {
   const { name, email, password, confirmPassword} = req.body
   if ( !name || name.length > 50 || !email ) {
-    req.flash('error_message', '表單內容不符條件')
+    req.flash('error_messages', '表單內容不符條件')
     return res.render('register', { name, email })
   }
   if ( confirmPassword !== password) {
-    req.flash('error_message', '兩次密碼輸入不符')
+    req.flash('error_messages', '兩次密碼輸入不符')
     return res.render('register', { name, email })
   }
 
   User.findOne({where: { email:email}})
   .then( users => {
     if (users) {
-      req.flash('error_message', '註冊失敗，email已註冊過')
+      req.flash('error_messages', '註冊失敗，email已註冊過')
       return res.render('register', { name, email })
     }
     User.create({
@@ -52,7 +52,7 @@ signUp: (req, res) => {
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
     })
     .then(() => {
-      req.flash('success_message', '帳號已成功註冊!')
+      req.flash('success_messages', '帳號已成功註冊!')
       return res.redirect('/users/login')
     })
   })
@@ -60,7 +60,7 @@ signUp: (req, res) => {
 
 //登出
 logout: (req,res) => {
-  req.flash('success_message', '成功登出!')
+  req.flash('success_messages', '成功登出!')
   req.logout()
   res.redirect('/users/login')
   },
