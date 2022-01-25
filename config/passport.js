@@ -27,30 +27,30 @@ module.exports = app => {
 }))
 
   //Facebook登入策略
- passport.use(new FacebookStrategy({
-   clientID: process.env.FACEBOOK_ID, //應用程式編號
-   clienSecret: process.env.FACEBOOK_SECRET, //應用程式密碼
-   callbackURL: process.env.FACEBOOK_CALLBACK, //重新導向網址
-   profiledFields: ['email', 'displayName'] //要求資料
- }, (accessToken, refreshToken, profile, done) => {
-   console.log(profile)
-   const { name, email } = profile._json
-   User.finOne({ email })
-   .then(user => {
-     if(user) return done (null, user)
-     const randomPassword = Math.random().toString(36).slice(-8)
-     bcrypt
-     .genSalt(10)
-     .then(salt => bcrypt.hash(randomPassword, salt))
-     .then(hash => User.creat({
-       name,
-       email,
-       password: hash
-     })) 
-     .then(user => done(null, user))
-     .catch(err => done(err, false))
-   })
- }))
+//  passport.use(new FacebookStrategy({
+//    clientID: process.env.FACEBOOK_ID, //應用程式編號
+//    clientSecret: process.env.FACEBOOK_SECRET, //應用程式密碼
+//    callbackURL: process.env.FACEBOOK_CALLBACK, //重新導向網址
+//    profiledFields: ['email', 'displayName'] //要求資料
+//  }, (accessToken, refreshToken, profile, done) => {
+//    console.log(profile)
+//    const { name, email } = profile._json
+//    User.finOne({ email })
+//    .then(user => {
+//      if(user) return done (null, user)
+//      const randomPassword = Math.random().toString(36).slice(-8)
+//      bcrypt
+//      .genSalt(10)
+//      .then(salt => bcrypt.hash(randomPassword, salt))
+//      .then(hash => User.creat({
+//        name,
+//        email,
+//        password: hash
+//      })) 
+//      .then(user => done(null, user))
+//      .catch(err => done(err, false))
+//    })
+//  }))
 
  //序列化，反序列化
 passport.serializeUser((user, cb) => {
